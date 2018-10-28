@@ -11,13 +11,8 @@
 
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddRaCqrs(this IServiceCollection services, IDefaultResponseBuilder defaultResponseBuilder = null)
+        public static IServiceCollection AddTaCqrs(this IServiceCollection services)
         {
-            if (defaultResponseBuilder == null)
-            {
-                defaultResponseBuilder = new DefaultResponseBuilder();
-            }
-
             services.AddMediatR();
 
             // This override the default Mediar behaviour which catches argument exceptions and tries to create the pipeline via reflections.  This 
@@ -26,9 +21,6 @@
             
             services.AddScoped<ICommandInvoker, CommandInvoker>();
             services.AddScoped<IQueryInvoker, QueryInvoker>();
-            
-            services.AddSingleton(defaultResponseBuilder);
-            
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingCommandHandler<,>));
             

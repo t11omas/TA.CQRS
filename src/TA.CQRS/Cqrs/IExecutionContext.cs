@@ -6,8 +6,6 @@
 
     public interface IExecutionContext
     {
-        IDefaultResponseBuilder DefaultResponse { get; }
-
         ILogger Logger { get; }
 
         IDictionary<string, object> ContextData { get; }

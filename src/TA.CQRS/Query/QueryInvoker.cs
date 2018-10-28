@@ -1,6 +1,7 @@
 ﻿namespace TA.CQRS.Query
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MediatR;
@@ -27,10 +28,21 @@
 
         {
             ILoggerFactory loggerFactory = this.serviceProvider.GetService<ILoggerFactory>();
+            var dataProviders = this.serviceProvider.GetServices<IContextDataProvider>();
+
+            Dictionary<string, object> contextData = new Dictionary<string, object>();
+
+            foreach (IContextDataProvider dataProvider in dataProviders)
+            {
+                foreach (var data in dataProvider.FetchData())
+                {
+                    contextData.Add(data.Key, data.Value);
+                }
+            }
             QueryContext<TQuery> context = new QueryContext<TQuery>(
                 command,
                 loggerFactory.CreateLogger(typeof(TQuery)),
-                this.serviceProvider.GetService<IDefaultResponseBuilder>());
+                contextData);
 
             return this.mediator.Send(context);
         }

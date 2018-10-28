@@ -44,7 +44,6 @@
             CommandContext<TCommand> context = new CommandContext<TCommand>(
                 command,
                 loggerFactory.CreateLogger(typeof(TCommand)),
-                this.serviceProvider.GetService<IDefaultResponseBuilder>(),
                 contextData);
 
             return this.mediator.Send(context);
