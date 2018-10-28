@@ -35,10 +35,7 @@
 
             foreach (IContextDataProvider dataProvider in dataProviders)
             {
-                foreach (var data in dataProvider.FetchData())
-                {
-                   contextData.Add(data.Key, data.Value); 
-                }
+                dataProvider.AddContextData(contextData);
             }
 
             CommandContext<TCommand> context = new CommandContext<TCommand>(

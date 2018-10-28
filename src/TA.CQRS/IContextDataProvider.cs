@@ -1,9 +1,10 @@
 ﻿namespace TA.CQRS
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IContextDataProvider
     {
-        IEnumerable<KeyValuePair<string, object>> FetchData();
+        Task AddContextData(Dictionary<string, object> contextData);
     }
 }

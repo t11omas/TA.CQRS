@@ -34,10 +34,7 @@
 
             foreach (IContextDataProvider dataProvider in dataProviders)
             {
-                foreach (var data in dataProvider.FetchData())
-                {
-                    contextData.Add(data.Key, data.Value);
-                }
+                dataProvider.AddContextData(contextData);
             }
             QueryContext<TQuery> context = new QueryContext<TQuery>(
                 command,
